@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .nav-icons {
+        @apply relative
+    }
+
+    .nav-icons::after{
+        @apply content-[''] bg-[#EC5A13] h-[3px] w-full scale-x-0 hover:scale-x-100 absolute left-0 -bottom-[5px] rounded-xl duration-300
+    }
+
+    .nav-categories {
+        @apply relative
+    }
+
+    .nav-categories::after{
+        @apply content-[''] bg-slate-950 h-[2px] w-full scale-x-0 hover:scale-x-100 absolute left-0 -bottom-[15px] rounded-xl duration-300
+    }
+
+    .nav-categories:active::after{
+        @apply scale-x-100 font-semibold
+    }
+}
+
