@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import DropdownDesktop from './DropdownDesktop'
 import { Bars3Icon } from '@heroicons/react/24/solid'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
@@ -9,19 +8,20 @@ import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/outline'
 import { UserIcon } from '@heroicons/react/24/outline'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronRightIcon } from '@heroicons/react/16/solid'
+import { HomeIcon } from '@heroicons/react/24/outline'
 
 
 const categories = [
-    {name: 'Immobilier', href: '#'},
-    {name: 'Véhicules', href: '#'},
-    {name: 'Locations de vacances', href: '#'},
-    {name: 'Emploi', href: '#'},
-    {name: 'Mode', href: '#'},
-    {name: 'Maison & Jardin', href: '#'},
-    {name: 'Famille', href: '#'},
-    {name: 'Électronique', href: '#'},
-    {name: 'Loisirs', href: '#'},
-    {name: 'Autres', href: '#'},
+    {id: 1, name: 'Immobilier', href: '#'},
+    {id: 2, name: 'Véhicules', href: '#'},
+    {id: 3, name: 'Locations de vacances', href: '#'},
+    {id: 4, name: 'Emploi', href: '#'},
+    {id: 5, name: 'Mode', href: '#'},
+    {id: 6, name: 'Maison & Jardin', href: '#'},
+    {id: 7, name: 'Famille', href: '#'},
+    {id: 8, name: 'Électronique', href: '#'},
+    {id: 9, name: 'Loisirs', href: '#'},
+    {id: 10, name: 'Autres', href: '#'},
 ]
 
 
@@ -32,8 +32,13 @@ export default function Navigation() {
     const [isOpen, setIsOpen] = useState(false)
 
     const handleIsOpen = () => {
-        setIsOpen(!isOpen)
-        
+        setIsOpen(!isOpen)        
+    }
+    
+    const [dropIsOpen, setDropIsOpen] = useState(false)
+
+    const handleDropIsOpen = () => {
+        setDropIsOpen(!dropIsOpen)        
     }
 
   return (
@@ -91,7 +96,7 @@ export default function Navigation() {
                 </a>      
             </div>                
           </nav>
-          <DropdownDesktop />
+          
 
 
           {/* OVERLAY MOBILE  */}
@@ -129,7 +134,7 @@ export default function Navigation() {
                 <h5 className='text-slate-400 mt-3 text-xs p-2'>Catégories</h5>
                 {categories.map((item) => (
                     <a
-                      key={item.name}
+                      key={item.id}
                       href={item.href}
                       className=
                         'flex items-center gap-2 hover:bg-[#faefe9] p-2 my-1 rounded-md text-sm'
@@ -154,6 +159,32 @@ export default function Navigation() {
             </div>
             
           </section>
+
+          {/* DROPDOWN  */}
+
+        <nav className='hidden lg:flex bg-slate-50 border-b-2 border-slate-300 h-9'>
+            <div className="container mx-auto bg-slate-50 flex justify-center gap-10 ">
+                <ul className='flex gap-10'>
+                    {categories.map((item) => (
+                        <li href={item.href} key={item.id} className='nav-categories text-sm cursor-pointer hover:font-semibold' onMouseEnter={handleDropIsOpen} >{item.name}</li>
+                    ))}
+                </ul>
+            </div>
+
+        </nav>
+
+
+        {/* DROPDOWN CATEGORIES                  */}
+        
+        <div className={`h-96 w-2/3 mx-auto bg-slate-50 rounded-b-2xl shadow-lg ${dropIsOpen ? "block" : "hidden"}`} onMouseLeave={() => setDropIsOpen(false)}>
+            <div className="flex w-56 h-full bg-slate-200 p-8 rounded-bl-2xl">
+                <HomeIcon className='size-6 mx-2' />
+                {categories.map((item) => (
+                    <h1 className='font-semibold' key={item.id}></h1>
+
+                ))}
+            </div>
+        </div>
 
     </>
   )
