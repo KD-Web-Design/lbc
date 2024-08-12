@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Bars3Icon } from '@heroicons/react/24/solid'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
@@ -41,6 +41,26 @@ export default function Navigation() {
     const handleBlur = () => {
         setIsExpanded(false)
     }
+
+
+    // SHADOW 
+
+    const [shadow, setShadow] = useState(false)
+
+    const handleScroll = () => {
+        if (window.scrollY > 50) {
+            setShadow(true);
+        } else {
+            setShadow(false)
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll)
+        return () => {
+            window.addEventListener('scroll', handleScroll)
+        }
+    }, [])
      
 
 
@@ -76,7 +96,7 @@ export default function Navigation() {
     <>
            
           <nav className='w-full lg:hidden fixed top-0 z-10'>
-              <div className='w-full px-3 pt-3 bg-slate-50 flex justify-center relative'>
+              <div className='w-full p-3 pb-0 bg-slate-50 flex justify-center relative'>
                   <Bars3Icon className='size-10 absolute top-4 left-3 cursor-pointer' onClick={handleIsOpen}  />
                   <img src="src\assets\Leboncoin_logo_2021.png" alt="logo Leboncoin" className='w-1/2 max-w-48' />
               </div>
@@ -88,15 +108,15 @@ export default function Navigation() {
           </nav>
           
           {/* DESKTOP    */}
-          <nav className='w-full  hidden lg:flex justify-center bg-slate-50'>
+          <nav className={`w-full hidden lg:flex justify-center bg-slate-50 fixed top-0 z-20 transition-shadow ${shadow ? 'shadow-lg' : ''}`}>
             <div className="p-4 bg-slate-50" >
                 <img src="src\assets\Leboncoin_logo_2021.png" alt="logo Leboncoin" className='max-w-44' />
             </div>
             <div className='w-[32rem] flex justify-end'>
-                    <div className={` bg-slate-50 flex relative items-center transition-all duration-500 ease-in-out ${isExpanded ? 'w-0 opacity-0' : ' w-full opacity-100' }`}>
-                        <PlusCircleIcon className='size-5 text-slate-50 absolute ml-3 pointer-events-none'/>
-                        <button className='font-semibold text-slate-50 bg-[#EC5A13] py-2 rounded-2xl pl-10 pr-4 hover:bg-[#fd9d6c] whitespace-nowrap'>Déposer une annonce</button>
-                    </div>
+                <div className={` bg-slate-50 flex relative items-center transition-all duration-500 ease-in-out ${isExpanded ? 'w-0 opacity-0' : ' w-full opacity-100' }`}>
+                    <PlusCircleIcon className='size-5 text-slate-50 absolute ml-3 pointer-events-none'/>
+                    <button className='font-semibold text-slate-50 bg-[#EC5A13] py-2 rounded-2xl pl-10 pr-4 hover:bg-[#fd9d6c] whitespace-nowrap'>Déposer une annonce</button>
+                </div>
                 <div className={`p-2 bg-slate-50 relative flex items-center min-w-[17rem] transition-all duration-500 ease-in-out`} style={{ width: isExpanded ? '100%' : '17rem' }}>
                     <input type="text" 
                     placeholder='Rechercher sur leboncoin' 
@@ -132,7 +152,7 @@ export default function Navigation() {
 
                 {/* DROPDOWN  */}
       
-              <nav className='hidden lg:flex bg-slate-50 border-b-2 border-slate-300 h-9'>
+              <nav className='hidden lg:flex bg-slate-50 border-b-2 border-slate-300 h-9 mt-[68px]'>
                   <div className="container mx-auto bg-slate-50 flex justify-center gap-10 ">
                       <ul className='flex gap-10'>
                           {categories.map((item) => (
@@ -148,7 +168,7 @@ export default function Navigation() {
       
               {hoveredCategory && (
               
-              <div className={`h-96 w-[95%] xl:w-2/3 mx-auto bg-slate-50 rounded-b-2xl shadow-lg ${dropIsOpen ? "block" : "hidden"}`} onMouseLeave={handleMouseLeave}>
+              <div className={`h-96 w-[95%] xl:w-2/3 mx-auto bg-slate-50 rounded-b-2xl shadow-lg absolute left-1/2 transform -translate-x-1/2 z-50 ${dropIsOpen ? "block" : "hidden"}`} onMouseLeave={handleMouseLeave}>
                   <div className="flex w-56 h-full bg-slate-200 p-8 rounded-bl-2xl">
                       <div className='flex items-center h-10'>
                             <div className='px-3'>{<hoveredCategory.icon />}</div>
@@ -160,66 +180,66 @@ export default function Navigation() {
 
           {/* OVERLAY MOBILE  */}
 
-        <div className="w-full h-screen bg-transparent z-50" onClick={() => setIsOpen(false)}>
-          <section className={`flex fixed top-0 w-full sm:w-2/3 -left-full bg-slate-50 duration-500 z-10 items-center flex-col py-3 overflow-y-scroll h-screen lg:hidden ${isOpen ? "left-0" : ""}` } onClick={e => e.stopPropagation()}>
-            <img src="src\assets\Leboncoin_logo_2021.png" alt="logo lbc" className='object-cover w-44' />
-            <div className='p-2 absolute top-3 right-3 hover:bg-slate-300 rounded-2xl cursor-pointer'>
-                <XMarkIcon className='size-6  text-slate-600' onClick={handleIsOpen}/>
-            </div>
-            <div className='w-[95%] border-t-2 border-slate-300 mt-3'>
-                <a href='#' className='flex items-center my-2 gap-2 hover:bg-[#faefe9] p-2 rounded-md'>
-                    <PlusCircleIcon className='size-5 text-slate-900 ml-3 pointer-events-none'/>
-                    <span className='font-semibold'>Déposer une annonce</span>
-                </a>
-                <a href='#' className='flex items-center gap-2 hover:bg-[#faefe9] p-2 my-1 rounded-md'>
-                    <MagnifyingGlassIcon className='size-5 text-slate-900 ml-3 pointer-events-none'/>
-                    <span className='font-semibold'>Rechercher</span>
-                </a>
-            </div>
-            <div className='w-[95%] border-t-2 border-slate-300 mt-3'>
-                <a href='#' className='flex items-center my-2 gap-2 hover:bg-[#faefe9] p-2 rounded-md'>
-                    <ChatBubbleBottomCenterTextIcon className='size-5 text-slate-900 ml-3 pointer-events-none'/>
-                    <span className='font-semibold'>Messages</span>
-                </a>
-                <a href='#' className='flex items-center gap-2 hover:bg-[#faefe9] p-2 my-1 rounded-md'>
-                    <HeartIcon className='size-5 text-slate-900 ml-3 pointer-events-none'/>
-                    <span className='font-semibold'>Favoris</span>
-                </a>
-                <a href='#' className='flex items-center gap-2 hover:bg-[#faefe9] p-2 my-1 rounded-md'>
-                    <BellIcon className='size-5 text-slate-900 ml-3 pointer-events-none'/>
-                    <span className='font-semibold'>Recherches sauvegardées</span>
-                </a>
-            </div>
-            <div className="w-[95%] flex flex-col border-t-2 border-slate-300 mt-2">
-                <h5 className='text-slate-400 mt-3 text-xs p-2'>Catégories</h5>
-                {categories.map((item) => (
-                    <a
-                      key={item.id}
-                      href={item.href}
-                      className=
-                        'flex items-center gap-2 hover:bg-[#faefe9] p-2 my-1 rounded-md text-sm'
-                      
-                      >
-                        {item.name}
-                      </a>
-                ))}
-                <a href='#' className='flex items-center gap-2 hover:bg-[#faefe9] p-2 mt-3 rounded-md'>
-                    <span className='font-semibold'>Se connecter</span>
-                </a>
-            </div>
-            <div className="w-[95%] flex flex-col border-t-2 border-slate-300 mt-2">
-                <a href='#' className='flex items-center justify-between gap-2 hover:bg-[#faefe9] p-2 my-1 rounded-md'>
-                    <span className='font-semibold'>Informations pratiques</span>
-                    <ChevronRightIcon className='size-7 text-slate-400 ml-3 pointer-events-none'/>
-                </a>
-                <a href='#' className='flex items-center justify-between gap-2 hover:bg-[#faefe9] p-2 my-1 rounded-md'>
-                    <span className='font-semibold'>leboncoin</span>
-                    <ChevronRightIcon className='size-7 text-slate-400 ml-3 pointer-events-none'/>
-                </a>
-            </div>
-            
-          </section>
+        
+        <section className={`flex fixed top-0 w-full sm:w-2/3 -left-full bg-slate-50 duration-500 z-10 items-center flex-col py-3 overflow-y-scroll h-screen lg:hidden ${isOpen ? "left-0" : ""}` } onClick={e => e.stopPropagation()}>
+        <img src="src\assets\Leboncoin_logo_2021.png" alt="logo lbc" className='object-cover w-44' />
+        <div className='p-2 absolute top-3 right-3 hover:bg-slate-300 rounded-2xl cursor-pointer'>
+            <XMarkIcon className='size-6  text-slate-600' onClick={handleIsOpen}/>
         </div>
+        <div className='w-[95%] border-t-2 border-slate-300 mt-3'>
+            <a href='#' className='flex items-center my-2 gap-2 hover:bg-[#faefe9] p-2 rounded-md'>
+                <PlusCircleIcon className='size-5 text-slate-900 ml-3 pointer-events-none'/>
+                <span className='font-semibold'>Déposer une annonce</span>
+            </a>
+            <a href='#' className='flex items-center gap-2 hover:bg-[#faefe9] p-2 my-1 rounded-md'>
+                <MagnifyingGlassIcon className='size-5 text-slate-900 ml-3 pointer-events-none'/>
+                <span className='font-semibold'>Rechercher</span>
+            </a>
+        </div>
+        <div className='w-[95%] border-t-2 border-slate-300 mt-3'>
+            <a href='#' className='flex items-center my-2 gap-2 hover:bg-[#faefe9] p-2 rounded-md'>
+                <ChatBubbleBottomCenterTextIcon className='size-5 text-slate-900 ml-3 pointer-events-none'/>
+                <span className='font-semibold'>Messages</span>
+            </a>
+            <a href='#' className='flex items-center gap-2 hover:bg-[#faefe9] p-2 my-1 rounded-md'>
+                <HeartIcon className='size-5 text-slate-900 ml-3 pointer-events-none'/>
+                <span className='font-semibold'>Favoris</span>
+            </a>
+            <a href='#' className='flex items-center gap-2 hover:bg-[#faefe9] p-2 my-1 rounded-md'>
+                <BellIcon className='size-5 text-slate-900 ml-3 pointer-events-none'/>
+                <span className='font-semibold'>Recherches sauvegardées</span>
+            </a>
+        </div>
+        <div className="w-[95%] flex flex-col border-t-2 border-slate-300 mt-2">
+            <h5 className='text-slate-400 mt-3 text-xs p-2'>Catégories</h5>
+            {categories.map((item) => (
+                <a
+                    key={item.id}
+                    href={item.href}
+                    className=
+                    'flex items-center gap-2 hover:bg-[#faefe9] p-2 my-1 rounded-md text-sm'
+                    
+                    >
+                    {item.name}
+                    </a>
+            ))}
+            <a href='#' className='flex items-center gap-2 hover:bg-[#faefe9] p-2 mt-3 rounded-md'>
+                <span className='font-semibold'>Se connecter</span>
+            </a>
+        </div>
+        <div className="w-[95%] flex flex-col border-t-2 border-slate-300 mt-2">
+            <a href='#' className='flex items-center justify-between gap-2 hover:bg-[#faefe9] p-2 my-1 rounded-md'>
+                <span className='font-semibold'>Informations pratiques</span>
+                <ChevronRightIcon className='size-7 text-slate-400 ml-3 pointer-events-none'/>
+            </a>
+            <a href='#' className='flex items-center justify-between gap-2 hover:bg-[#faefe9] p-2 my-1 rounded-md'>
+                <span className='font-semibold'>leboncoin</span>
+                <ChevronRightIcon className='size-7 text-slate-400 ml-3 pointer-events-none'/>
+            </a>
+        </div>
+        
+        </section>
+    
 
 
     </>

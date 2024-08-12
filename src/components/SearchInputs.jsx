@@ -5,43 +5,30 @@ import { MapPin } from "lucide-react"
 
 export default function SearchInputs() {
   return (
-    <div className="w-full flex gap-2 justify-center px-2 mt-40 lg:hidden">
+    <div className="w-full flex gap-2 justify-center mt-40 px-2 lg:mt-8 my-8 lg:w-[1000px] mx-auto">
         <div className="flex grow">
-            <button name="localisation" id="localisation" className="flex items-center px-4 py-1 gap-1 w-full rounded-2xl font-medium text-lg  hover:border-black border-2 border-slate-400 relative">
+            <button name="localisation" id="localisation" className="flex items-center px-4 py-1 gap-1 w-full font-medium rounded-2xl  hover:border-black ring-1 ring-slate-400 relative">
                 <MapPin  className="size-6 text-slate-500"/>
-                Loiret (45)
+                Paris (75)
                 <ChevronDownIcon className="size-6 absolute right-4 text-slate-500" />
             </button>
         </div>
         <div className="flex grow">
-            <button className="flex items-center justify-between px-4 py-3 w-full rounded-2xl text-lg border-slate-400 hover:border-black border-2">Prix
+            <button className="flex items-center justify-between px-4 py-2 w-full rounded-2xl  ring-slate-400 hover:border-black ring-1">Prix
                 <ChevronRightIcon className="size-6 text-slate-500" />
             </button>
         </div>
-        <div className="hidden sm:flex">
-        <button className="flex items-center justify-between px-4 py-3 w-full rounded-2xl text-lg border-slate-400 hover:border-black border-2">Marque
+        <div className="hidden lg:flex grow">
+            <button className="flex items-center justify-between px-4 py-2 w-full rounded-2xl  ring-slate-400 hover:border-black ring-1">Marque
                 <ChevronRightIcon className="size-6 text-slate-500" />
             </button>
         </div>
-        <div className="hidden sm:flex">
-        <button className="flex items-center justify-between px-4 py-3 w-full rounded-2xl text-lg border-slate-400 hover:border-black border-2">Année
-                <ChevronRightIcon className="size-6 text-slate-500" />
-            </button>
-        </div>
-        <div className="hidden sm:flex">
-        <button className="flex items-center justify-between px-4 py-3 w-full rounded-2xl text-lg border-slate-400 hover:border-black border-2">Type
-                <ChevronRightIcon className="size-6 text-slate-500" />
-            </button>
-        </div>
-        <div className="hidden sm:flex">
-        <button className="flex items-center justify-between px-4 py-3 w-full rounded-2xl text-lg border-slate-400 hover:border-black border-2">Car
-                <ChevronRightIcon className="size-6 text-slate-500" />
-            </button>
-        </div>
+        
+        
         <div className="flex">
-            <button className="flex items-center px-4 gap-1 w-full rounded-2xl font-semibold text-lg border-slate-400 hover:border-black border-2">
+            <button className="flex items-center px-4 gap-1 w-full rounded-2xl font-semibold ring-slate-400 hover:border-black ring-1">
                 <AdjustmentsHorizontalIcon className="size-6 text-slate-500" />
-                <span className="hidden sm:block">Filtres</span>
+                <span className="hidden sm:block font-normal">Filtres</span>
             </button>
         </div>
     </div>
