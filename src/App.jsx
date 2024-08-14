@@ -1,4 +1,5 @@
 import Articles from './components/Articles'
+import FilterOverlay from './components/FilterOverlay'
 import Footer from './components/Footer'
 import Navigation from './components/Navigation'
 import SearchInputs from './components/SearchInputs'
@@ -10,6 +11,7 @@ export default function App() {
       <SearchInputs />
       <Articles />
       <Footer />
+      <FilterOverlay />
     </>
   )
 }

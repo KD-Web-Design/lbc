@@ -47,7 +47,6 @@ export default function Articles() {
       <SaveSearchButton />
       <Pagination />
     </div>
-    <p>test</p>
 
     </>
   )
