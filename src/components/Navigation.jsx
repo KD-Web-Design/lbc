@@ -168,7 +168,7 @@ export default function Navigation() {
       
               {hoveredCategory && (
               
-              <div className={`h-96 w-[95%] xl:w-2/3 mx-auto bg-slate-50 rounded-b-2xl shadow-lg absolute left-1/2 transform -translate-x-1/2 z-50 ${dropIsOpen ? "block" : "hidden"}`} onMouseLeave={handleMouseLeave}>
+              <div className={`h-96 w-[1000px] mx-auto bg-slate-50 rounded-b-2xl shadow-lg absolute left-1/2 transform -translate-x-1/2 z-50 ${dropIsOpen ? "block" : "hidden"}`} onMouseLeave={handleMouseLeave}>
                   <div className="flex w-56 h-full bg-slate-200 p-8 rounded-bl-2xl">
                       <div className='flex items-center h-10'>
                             <div className='px-3'>{<hoveredCategory.icon />}</div>
