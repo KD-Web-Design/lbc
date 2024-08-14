@@ -68,20 +68,37 @@ export default function Navigation() {
     const [isOpen, setIsOpen] = useState(false);
     const [dropIsOpen, setDropIsOpen] = useState(false);
     const [hoveredCategoryId, setHoveredCategoryId] = useState(null);
+    const [timeoutId, setTimeoutId] = useState(null)
     
     const handleIsOpen = () => {
         setIsOpen(!isOpen);
     };
 
     const handleMouseEnter = (id) => {
-        setHoveredCategoryId(id);
-        setDropIsOpen(true);
+        const idTimeout = setTimeout(() => {
+            setHoveredCategoryId(id);
+            setDropIsOpen(true);
+            
+        }, 250);
+
+        setTimeoutId(idTimeout)
     };
 
     const handleMouseLeave = () => {
+        if (timeoutId) {
+            clearTimeout(timeoutId)
+        }
         setDropIsOpen(false);
         setHoveredCategoryId(null);
     };
+
+    useEffect(() => {
+        return () => {
+            if (timeoutId) {
+                clearTimeout(timeoutId)
+            }
+        }
+    }, [timeoutId])
 
     const hoveredCategory = categories.find((item) => item.id === hoveredCategoryId);
 
